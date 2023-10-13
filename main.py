@@ -3,16 +3,16 @@ import requests
 from bs4 import BeautifulSoup
 
 while True:
-    # Ask the user for input (ID or Name)
+    # Ввод пользователя
     user_input = input("Enter a cryptocurrency ID or Name (or 'exit' to quit): ").strip()
     
     if user_input.lower() == 'exit':
-        break  # Exit the loop if the user enters 'exit'
+        break  # Выйти если пользователь напишет 'exit'
 
-    # Construct the URL based on user input
+    # URL сопоставляем с вводом пользователя
     url = f'https://coinmarketcap.com/currencies/{user_input}/'
 
-    # Send a GET request to the page
+    # Отправка GET запроса
     response = requests.get(url)
 
     # Проверяем успешность запроса
@@ -36,11 +36,6 @@ while True:
             topicPrice = topicPrice_element.text.strip()
         else :
             topicPrice = "error"
-        # topicPrice24hoursPersent_element = soup.find('span', class_='sc-4984dd93-0 sc-5219c53f-1 eBHWnA') # 24h %
-        # if topicPrice24hoursPersent_element:
-        #     topicPrice24hoursPersent = topicPrice24hoursPersent_element.text.strip()
-        # else :
-        #     topicPrice24hoursPersent = "error"
         # topicMarketCap_element = soup.find('p', class_='sc-16891c57-0 fRWxhs base-text') # Market Cap
         # if topicMarketCap:
         #     topicMarketCap = topicMarketCap_element.text.strip()
@@ -62,9 +57,6 @@ while True:
         print(f'Name: {topicID}')
         print(f'Name: {topicName}')
         print(f'Price: {topicPrice}')
-        # print(f'1h %: {topicPrice1hourPersent}')
-        # print(f'24h %: {topicPrice24hoursPersent}')
-        # print(f'7d %: {topicPrice7daysPersent}')
         # print(f'MarketCap: {topicMarketCap}')
         # print(f'Volume: {topicVolume}')
         # print(f'Circulating Supply: {topicCirculatingSupply}')
