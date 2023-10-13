@@ -1,4 +1,7 @@
 # Импорт библиотек
+from email.message import EmailMessage
+import ssl
+import smtplib
 import requests
 from bs4 import BeautifulSoup
 
@@ -11,11 +14,8 @@ def find_and_extract(soup, element_type, class_name, default="Not Found"):
         return default
 
 while True:
-    # Ввод пользователя
-    user_input = input("Enter a cryptocurrency ID or Name (or 'exit' to quit): ").strip()
-    
-    if user_input.lower() == 'exit':                            # Убираем заглавные буквы чтобы по итогу получалось 'exit'
-        break                                                   # Выйти если пользователь напишет 'exit'
+    # Криптовалюта которую нужно отправить
+    user_input = "bitcoin"
 
     user_input = user_input.replace(" ", "-")                   # Меняем пробел на тире, для того чтобы в url значение input-a было через тире.
     if '-' in user_input:                                       # Из-за того что классы с пробелом и без разные, то выводить нужно соответственно разные классы
@@ -38,10 +38,30 @@ while True:
         topicID = find_and_extract(soup, 'span', 'sc-16891c57-0 dMKlNV base-text')
         topicName = find_and_extract(soup, 'span', 'coin-name-pc')
         topicPrice = find_and_extract(soup, 'span', price_class)
-        
-        print(f'Name: {topicID}')
-        print(f'Name: {topicName}')
-        print(f'Price: {topicPrice}')
 
+        # Код для отправки электронной почты из sendEmail.py
+        email_sender = 'toriya.damir.2004@gmail.com'
+        email_password = 'naxw iweb jpke xzyu'
+        email_reciver = 'toriadamir34@gmail.com'
+
+        subject = f'Информация о криптовалюте {user_input}'
+        body = f"""
+        Name: {topicID}
+        Name: {topicName}
+        Price: {topicPrice}
+        """
+
+        em = EmailMessage()
+        em['From'] = email_sender
+        em['To'] = email_reciver
+        em['Subject'] = subject
+        em.set_content(body)
+
+        context = ssl.create_default_context()
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(email_sender, email_password)
+            smtp.sendmail(email_sender, email_reciver, em.as_string())
+    
     else :
         print("Ошибка!")
