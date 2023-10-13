@@ -9,15 +9,15 @@
 Установка
 
 Склонируйте репозиторий в ветке "django-project" на свой локальный компьютер:
-```shell
+```
 git clone -b django-project https://github.com/DamirTD/crypto_parser.git
 ```
 Перейдите в каталог проекта:
-```shell
+```
 cd crypto_parser
 ```
 Соберите и запустите проект с помощью Docker Compose:
-```shell
+```
 docker-compose up --build
 ```
 
