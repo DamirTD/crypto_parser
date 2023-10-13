@@ -36,32 +36,10 @@ while True:
             topicPrice = topicPrice_element.text.strip()
         else :
             topicPrice = "error"
-        # topicMarketCap_element = soup.find('p', class_='sc-16891c57-0 fRWxhs base-text') # Market Cap
-        # if topicMarketCap:
-        #     topicMarketCap = topicMarketCap_element.text.strip()
-        # else :
-        #     topicMarketCap = "error"
-        # topicVolume_element = soup.find('p', class_='sc-16891c57-0 fRWxhs base-text') # Volume 
-        # if topicVolume_element:
-        #     topicVolume = topicVolume_element.text.strip()
-        # else :
-        #     topicVolume = "error"
-        # topicCirculatingSupply_element = soup.find('p', class_='text slider-value') # Circulating Supply
-        # if topicCirculatingSupply_element:
-        #     topicCirculatingSupply = topicCirculatingSupply_element.text.strip()
-        # else :
-        #     topicCirculatingSupply = "error"
-
-            #todo: Graphics
         
         print(f'Name: {topicID}')
         print(f'Name: {topicName}')
         print(f'Price: {topicPrice}')
-        # print(f'MarketCap: {topicMarketCap}')
-        # print(f'Volume: {topicVolume}')
-        # print(f'Circulating Supply: {topicCirculatingSupply}')
-
-        
 
     else :
         print("Ошибка!")
