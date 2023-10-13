@@ -2,24 +2,44 @@
 import requests
 from bs4 import BeautifulSoup
 
-# Ссылка сайта с которого берем значение
-url = 'https://coinmarketcap.com/en/currencies/bitcoin/'
+while True:
+    # Ввод пользователя
+    user_input = input("Enter a cryptocurrency ID or Name (or 'exit' to quit): ").strip()
+    
+    if user_input.lower() == 'exit':
+        break  # Выйти если пользователь напишет 'exit'
 
-# Отправляем GET-запрос к странице
-response = requests.get(url)
+    # URL сопоставляем с вводом пользователя
+    url = f'https://coinmarketcap.com/currencies/{user_input}/'
 
-# Проверяем успешность запроса
-if response.status_code == 200:
-    # Создаем объект BeautifulSoup для парсинга HTML
-    soup = BeautifulSoup(response.text, 'html.parser')
+    # Отправка GET запроса
+    response = requests.get(url)
 
-    # Ишем значения и присваиваем в переменную
-    name = soup.find('span', class_='coin-name-pc').text.strip()
-    symbol = soup.find('span', class_='sc-16891c57-0 dMKlNV base-text').text.strip()
-    price = soup.find('span', class_='sc-16891c57-0 dxubiK base-text').text.strip()
+    # Проверяем успешность запроса
+    if response.status_code == 200:
+        # Создаем объект BeautifulSoup для парсинга HTML
+        soup = BeautifulSoup(response.text, 'html.parser')
 
-    print(f'Название: {name}')
-    print(f'Монета: {symbol}')
-    print(f'Цена: {price}')
-else :
-    print("Ошибка!")
+        # Названия
+        topicID_element = soup.find('span', class_='sc-16891c57-0 dMKlNV base-text')# ID
+        if topicID_element:
+            topicID = topicID_element.text.strip()
+        else :
+            topicID = "error"
+        topicName_element = soup.find('span', class_='coin-name-pc') # Name
+        if topicName_element:
+            topicName = topicName_element.text.strip()
+        else :
+            topicName = "error"
+        topicPrice_element = soup.find('span', class_='sc-16891c57-0 dxubiK base-text') # Price
+        if topicPrice_element:
+            topicPrice = topicPrice_element.text.strip()
+        else :
+            topicPrice = "error"
+        
+        print(f'Name: {topicID}')
+        print(f'Name: {topicName}')
+        print(f'Price: {topicPrice}')
+
+    else :
+        print("Ошибка!")
