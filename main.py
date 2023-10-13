@@ -2,6 +2,13 @@
 import requests
 from bs4 import BeautifulSoup
 
+def find_and_extract(soup, element_type, class_name, default="Not Found"):
+            element = soup.find(element_type, class_=class_name)
+            if element:
+                return element.text.strip()
+            else:
+                return default
+
 while True:
     # Ввод пользователя
     user_input = input("Enter a cryptocurrency ID or Name (or 'exit' to quit): ").strip()
@@ -9,8 +16,15 @@ while True:
     if user_input.lower() == 'exit':
         break  # Выйти если пользователь напишет 'exit'
 
+    user_input = user_input.replace(" ", "-")
+
+    if '-' in user_input:
+        price_class = 'sc-16891c57-0 ksCNvw base-text'
+    else:
+        price_class = 'sc-16891c57-0 dxubiK base-text'
+
     # URL сопоставляем с вводом пользователя
-    url = f'https://coinmarketcap.com/currencies/{user_input}/'
+    url = f'https://coinmarketcap.com/currencies/{user_input}/'  
 
     # Отправка GET запроса
     response = requests.get(url)
@@ -19,23 +33,10 @@ while True:
     if response.status_code == 200:
         # Создаем объект BeautifulSoup для парсинга HTML
         soup = BeautifulSoup(response.text, 'html.parser')
-
-        # Названия
-        topicID_element = soup.find('span', class_='sc-16891c57-0 dMKlNV base-text')# ID
-        if topicID_element:
-            topicID = topicID_element.text.strip()
-        else :
-            topicID = "error"
-        topicName_element = soup.find('span', class_='coin-name-pc') # Name
-        if topicName_element:
-            topicName = topicName_element.text.strip()
-        else :
-            topicName = "error"
-        topicPrice_element = soup.find('span', class_='sc-16891c57-0 dxubiK base-text') # Price
-        if topicPrice_element:
-            topicPrice = topicPrice_element.text.strip()
-        else :
-            topicPrice = "error"
+        
+        topicID = find_and_extract(soup, 'span', 'sc-16891c57-0 dMKlNV base-text')
+        topicName = find_and_extract(soup, 'span', 'coin-name-pc')
+        topicPrice = find_and_extract(soup, 'span', price_class)
         
         print(f'Name: {topicID}')
         print(f'Name: {topicName}')
