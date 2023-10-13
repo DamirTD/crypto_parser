@@ -15,12 +15,11 @@ if response.status_code == 200:
 
     # Ишем значения и присваиваем в переменную
     name = soup.find('span', class_='coin-name-pc').text.strip()
-
-
-    
+    symbol = soup.find('span', class_='sc-16891c57-0 dMKlNV base-text').text.strip()
     price = soup.find('span', class_='sc-16891c57-0 dxubiK base-text').text.strip()
 
     print(f'Название: {name}')
+    print(f'Монета: {symbol}')
     print(f'Цена: {price}')
 else :
     print("Ошибка!")
