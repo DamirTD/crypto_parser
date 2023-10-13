@@ -1,28 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitcoin data</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Пользовательские стили для центрирования элементов */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffffff; /* Optional background color for the body */
+        }
+
+        .crypto-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px snow #ccc; /* Border style */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 4px 6px 9px #888888; /* Shadow effect */
+            background-color: rgb(255, 255, 255);
+        }
+
+        #crypto-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
-
-    <h1>Информация о криптовалюте</h1>
-
-    <form method="post" id="crypto-form">
-        {% csrf_token %}
-        <label for="crypto_input">Введите ID или имя криптовалюты:</label>
-        <input type="text" name="crypto_input" id="crypto_input">
-        <button type="submit">Получить информацию</button>
-    </form>
-
-    <div id="crypto-info">
-        {% if crypto_info %}
+    <div class="container crypto-container">
+        <h1>Информация о криптовалюте</h1>
+        <form method="post" id="crypto-form" class="form-group d-flex justify-content-center align-items-center flex-column">
+            {% csrf_token %}
+            <label for="crypto_input">Введите имя криптовалюты:</label>
+            <input type="text" name="crypto_input" id="crypto_input" class="form-control w-25">
+            <button type="submit" class="btn btn-primary mt-3">Получить информацию</button>
+        </form>
+        <div id="crypto-info">
             <h2>Результаты:</h2>
-            <p>ID: <span id="crypto-id">{{ crypto_info.id }}</span></p>
-            <p>Name: <span id="crypto-name">{{ crypto_info.name }}</span></p>
-            <p>Price: <span id="crypto-price">{{ crypto_info.price }}</span></p>
-        {% endif %}
+            {% if crypto_info %}
+            <p>ID: <span id="crypto-id" class="text-info">{{ crypto_info.id }}</span></p>
+            <p>Name: <span id="crypto-name" class="text-info">{{ crypto_info.name }}</span></p>
+            <p>Price: <span id="crypto-price" class="text-info">{{ crypto_info.price }}</span></p>
+            {% endif %}
+        </div>
     </div>
+
+    <!-- Подключение Bootstrap JS (если требуется) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
