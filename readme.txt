@@ -8,8 +8,8 @@
 
 Установка
 
-Склонируйте репозиторий в ветке "archie" на свой локальный компьютер:
-    git clone -b archie https://github.com/DamirTD/crypto_parser.git
+Склонируйте репозиторий в ветке "django-project" на свой локальный компьютер:
+    git clone -b django-project https://github.com/DamirTD/crypto_parser.git
 
 Перейдите в каталог проекта:
     cd crypto_parser
